@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delicious Bistro - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        header {
+            background-color: #8B0000;
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+        
+        /* Page Content Styles */
+        .page-content {
+            display: none;
+        }
+        
+        .active-page {
+            display: block;
+        }
+        
+        /* Home Page */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #FFD700;
+            color: #333;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #e6c200;
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #8B0000;
+        }
+        
+        .section-title p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        /* Menu Page */
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .menu-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .menu-item-content {
+            padding: 1.5rem;
+        }
+        
+        .menu-item-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .menu-item-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: #8B0000;
+            font-size: 1.2rem;
+        }
+        
+        /* Location Page */
+        .location-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .location-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .location-info h3 {
+            color: #8B0000;
+            margin-bottom: 1rem;
+        }
+        
+        .location-info p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .location-map {
+            flex: 2;
+            min-width: 300px;
+            height: 400px;
+            background-color: #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        /* About Page */
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Contact Page */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+        }
+        
+        .submit-btn {
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #6d0000;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #FFD700;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            margin-bottom: 0.5rem;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .footer-section a:hover {
+            color: #FFD700;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Delicious Bistro</div>
+                <nav>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('menu')">Menu</a></li>
+                        <li><a href="#" onclick="showPage('about')">About</a></li>
+                        <li><a href="#" onclick="showPage('location')">Location</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home" class="page-content active-page">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Welcome to Delicious Bistro</h1>
+                <p>Experience the finest culinary delights in town</p>
+                <a href="#" onclick="showPage('menu')" class="btn">View Our Menu</a>
+            </div>
+        </div>
+
+        <section>
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Specialties</h2>
+                    <p>Discover our chef's recommendations</p>
+                </div>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Special Dish 1">
+                        <div class="menu-item-content">
+                            <h3>Grilled Salmon</h3>
+                            <p>Fresh Atlantic salmon with lemon butter sauce</p>
+                            <span class="price">$24.99</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Special Dish 2">
+                        <div class="menu-item-content">
+                            <h3>Beef Tenderloin</h3>
+                            <p>Premium cut with red wine reduction</p>
+                            <span class="price">$32.99</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Special Dish 3">
+                        <div class="menu-item-content">
+                            <h3>Vegetable Medley</h3>
+                            <p>Seasonal vegetables with balsamic glaze</p>
+                            <span class="price">$18.99</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Menu Page -->
+    <div id="menu" class="page-content">
+        <section>
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Menu</h2>
+                    <p>Delicious dishes prepared with love</p>
+                </div>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Appetizer 1">
+                        <div class="menu-item-content">
+                            <h3>Bruschetta</h3>
+                            <p>Toasted bread topped with tomatoes, garlic, and fresh basil</p>
+                            <span class="price">$8.99</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Main Course 1">
+                        <div class="menu-item-content">
+                            <h3>Chicken Parmesan</h3>
+                            <p>Breaded chicken topped with marinara and mozzarella</p>
+                            <span class="price">$19.99</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Dessert 1">
+                        <div class="menu-item-content">
+                            <h3>Tiramisu</h3>
+                            <p>Classic Italian dessert with coffee and mascarpone</p>
+                            <span class="price">$7.99</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page-content">
+        <section>
+            <div class="container">
+                <div class="section-title">
+                    <h2>About Us</h2>
+                    <p>Our story and philosophy</p>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Our Journey</h3>
+                        <p>Founded in 2010, Delicious Bistro began as a small family-owned restaurant with a passion for creating memorable dining experiences. Our founder, Chef Marco, brought his expertise from Michelin-starred restaurants in Europe to create a menu that blends traditional techniques with local ingredients.</p>
+                        <p>Today, we continue this tradition of excellence, sourcing the freshest ingredients from local farmers and producers. Our team of talented chefs works tirelessly to create dishes that delight both the eyes and the palate.</p>
+                        <h3>Our Philosophy</h3>
+                        <p>We believe that great food starts with great ingredients. That's why we've built relationships with trusted suppliers who share our commitment to quality and sustainability. Every dish tells a story, and we're honored to share ours with you.</p>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Our Restaurant">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Location Page -->
+    <div id="location" class="page-content">
+        <section>
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Location</h2>
+                    <p>Visit us at our beautiful restaurant</p>
+                </div>
+                <div class="location-container">
+                    <div class="location-info">
+                        <h3>Address</h3>
+                        <p>123 Gourmet Street</p>
+                        <p>Foodie District, FD 12345</p>
+                        <p>Cityville</p>
+                        
+                        <h3>Hours</h3>
+                        <p>Monday - Thursday: 11am - 10pm</p>
+                        <p>Friday - Saturday: 11am - 11pm</p>
+                        <p>Sunday: 10am - 9pm</p>
+                        
+                        <h3>Contact</h3>
+                        <p>Phone: (123) 456-7890</p>
+                        <p>Email: info@deliciousbistro.com</p>
+                    </div>
+                    <div class="location-map">
+                        <!-- In a real implementation, you would embed a Google Map here -->
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215209179042!2d-73.9878449241645!3d40.74844097138952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1719152390581!5m2!1sen!2sus" 
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page-content">
+        <section>
+            <div class="container">
+                <div class="section-title">
+                    <h2>Contact Us</h2>
+                    <p>We'd love to hear from you</p>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Delicious Bistro</h3>
+                    <p>Experience fine dining at its best. We offer a unique blend of traditional and contemporary cuisine in an elegant setting.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#" onclick="showPage('home')">Home</a>
+                    <a href="#" onclick="showPage('menu')">Menu</a>
+                    <a href="#" onclick="showPage('about')">About</a>
+                    <a href="#" onclick="showPage('location')">Location</a>
+                    <a href="#" onclick="showPage('contact')">Contact</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>123 Gourmet Street</p>
+                    <p>Cityville, FD 12345</p>
+                    <p>(123) 456-7890</p>
+                    <p>info@deliciousbistro.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <!-- <p>&copy; 2025 Delicious Bistro. All rights reserved.</p> -->
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Function to show the selected page and hide others
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => {
+                page.classList.remove('active-page');
+            });
+            
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active-page');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Update browser history
+            history.pushState({}, '', `#${pageId}`);
+        }
+        
+        // Check for hash on page load
+        window.addEventListener('load', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                showPage(hash);
+            }
+        });
+    </script>
+</body>
+</html>
